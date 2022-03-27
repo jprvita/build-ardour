@@ -38,5 +38,5 @@ mv ${ARDOUR_SRC_DIR}/tools/osx_packaging/Ardour-${ARDOUR_VERSION}.0.dmg .
 rm -rf ${ARDOUR_SRC_DIR}
 rm -rf ${STACK_PREFIX}
 rm -rf ${WORKDIR}
-rm -rf ${SRC_CACHE}
 echo "Ardour package built at $(ls Ardour-${ARDOUR_VERSION}.0.dmg)"
+echo "You may want to remove the dependencies source tarball cache at ${SRC_CACHE}"
