@@ -4,6 +4,13 @@
 GIT_SERVER=git://git.ardour.org/ardour
 
 
+if [[ ${#} -gt 1 ]] ; then
+  echo "usage: $0 <version>"
+  exit 1
+elif [[ ${#} -eq 1 ]] ; then
+  ARDOUR_VERSION="${1}"
+fi
+
 WORKDIR=$(mktemp -d -t $(basename $0))
 SRC_CACHE=/var/tmp/src_cache/
 
@@ -23,7 +30,9 @@ ARDOUR_SRC_DIR=${WORKDIR}/ardour
 ARDOUR_REPO=${GIT_SERVER}/ardour.git
 git clone ${ARDOUR_REPO} ${ARDOUR_SRC_DIR}
 pushd ${ARDOUR_SRC_DIR}
-ARDOUR_VERSION=$(git describe --abbrev=0)
+if [[ -z ${ARDOUR_VERSION} ]] ; then
+  ARDOUR_VERSION=$(git describe --abbrev=0)
+fi
 git checkout ${ARDOUR_VERSION}
 touch ${ARDOUR_SRC_DIR}/libs/ardour/revision.cc
 ./waf configure --optimize \
